@@ -13,6 +13,12 @@ metadata:
     app: {{ $serviceName }}
   name: {{ $serviceName }}
   {{- end }}
+  {{- with index $v "service" }}
+  {{- with index . "annotations" }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- end }}
 spec:
   {{- if (and ($.Values.ingress.className) (eq $.Values.ingress.className "nginx")) }}
   type: "ClusterIP"
